@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Body, Request
 from pathlib import Path
 import torch
+import os
 import pandas as pd
 from torch import nn
 import transformers
@@ -16,12 +17,43 @@ max_input_length = 1024
 max_target_length = 128
 
 
-model_path = "/app/app/model/model_artifacts/"
-
-t5_model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
-
+model_path = os.path.abspath("/app/app/model/model_artifacts")
 model_checkpoint ='t5-small'
-    
+
+
+# add the below logic to load the model
+# if os.path.isdir(model_id):
+#             if MODEL_HEAD_NAME in os.listdir(model_id):
+#                 model_head_file = os.path.join(model_id, MODEL_HEAD_NAME)
+#             else:
+#                 model_head_file = None
+
+
+
+def fast_scandir(dirname):
+    subfolders= [f.path for f in os.scandir(dirname) if f.is_dir()]
+    for dirname in list(subfolders):
+        subfolders.extend(fast_scandir(dirname))
+    return subfolders
+
+print("current working directory")
+
+directory = os.getcwd()
+subfolders = fast_scandir(directory)
+print(subfolders)
+
+
+
+
+
+if os.path.isdir(model_path):
+    print("Model Loaded")
+    t5_model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
+else:
+    print("No Model Artifacts Found")
+    tf_model = None
+
+
 tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
 
 
