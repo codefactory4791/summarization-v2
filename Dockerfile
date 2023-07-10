@@ -19,6 +19,7 @@ RUN apt-get update && \
 
 # create enviroinment
 ENV PATH $PATH:~/gcloud/google-cloud-sdk/bin
+RUN ./google-cloud-sdk/bin/gcloud init
 
 # 
 COPY . /app
