@@ -1,0 +1,12 @@
+steps:
+- name: gcr.io/cloud-builders/gsutil
+  args: ['cp', 'gs://summarization_bucket_2023/pytorch_model.bin', '.app/model/model_artifacts/']
+
+steps:
+# build an image named gcr.io/designing-ml-systems/train:latest on cloudbuild machines
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'summarization:v1', '.']
+
+#push the image to the container registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'summarization:v1']
