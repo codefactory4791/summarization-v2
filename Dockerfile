@@ -17,11 +17,13 @@ RUN apt-get update && \
     apt-get install google-cloud-sdk -y
 
 
+# create enviroinment
 ENV PATH $PATH:~/gcloud/google-cloud-sdk/bin
 
 # 
 COPY . /app
 
+#move model to artifacts folder
 RUN gsutil cp gs://summarization_bucket_2023/pytorch_model.bin /app/app/model/model_artifacts/
 
 # download the model weights in the image
