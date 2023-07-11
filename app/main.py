@@ -40,25 +40,26 @@ with fs.open('summarization_bucket_2023/pytorch_model.bin', 'rb') as f:
 
 
 
-def fast_scandir(dirname):
-    subfolders= [f.path for f in os.scandir(dirname) if f.is_dir()]
-    for dirname in list(subfolders):
-        subfolders.extend(fast_scandir(dirname))
-    return subfolders
+# def fast_scandir(dirname):
+#     subfolders= [f.path for f in os.scandir(dirname) if f.is_dir()]
+#     for dirname in list(subfolders):
+#         subfolders.extend(fast_scandir(dirname))
+#     return subfolders
 
-print("current working directory")
+# print("current working directory")
 
-directory = os.getcwd()
-subfolders = fast_scandir(directory)
-print(subfolders)
+# directory = os.getcwd()
+# subfolders = fast_scandir(directory)
+# print(subfolders)
 
 
 
 
 
 if os.path.isdir(model_path):
-    print("Model Loaded")
+    
     t5_model = AutoModelForSeq2SeqLM.from_pretrained(full_model_path)
+    print("Model Loaded")
 else:
     print("No Model Artifacts Found")
     tf_model = None
