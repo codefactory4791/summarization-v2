@@ -31,33 +31,10 @@ with fs.open('summarization_bucket_2023/pytorch_model.bin', 'rb') as f:
     open(full_model_path, 'wb').write(f.read())
 
 
-# add the below logic to load the model
-# if os.path.isdir(model_id):
-#             if MODEL_HEAD_NAME in os.listdir(model_id):
-#                 model_head_file = os.path.join(model_id, MODEL_HEAD_NAME)
-#             else:
-#                 model_head_file = None
-
-
-
-# def fast_scandir(dirname):
-#     subfolders= [f.path for f in os.scandir(dirname) if f.is_dir()]
-#     for dirname in list(subfolders):
-#         subfolders.extend(fast_scandir(dirname))
-#     return subfolders
-
-# print("current working directory")
-
-# directory = os.getcwd()
-# subfolders = fast_scandir(directory)
-# print(subfolders)
-
-
-
-
-
 if os.path.isdir(model_path):
-    
+
+
+    print("Loading Model")
     t5_model = AutoModelForSeq2SeqLM.from_pretrained(full_model_path)
     print("Model Loaded")
 else:
