@@ -4,7 +4,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi import FastAPI, Body, Request
 from pathlib import Path
 import torch
-import gcsfs
+from google.cloud import storage
 import os
 import pandas as pd
 from torch import nn
@@ -26,6 +26,8 @@ def download_artifacts():
 
     model_path = os.path.abspath("/app/app/model/model_artifacts")
     model_checkpoint ='t5-small'
+    tf_model = None
+    tokenizer = None
 
     print("Downloading Model")
     bucket_name = "summarization_bucket_2023"
@@ -45,7 +47,7 @@ def download_artifacts():
         print("Model Loaded")
     else:
         print("No Model Artifacts Found")
-        tf_model = None
+        #tf_model = None
 
 
     tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
